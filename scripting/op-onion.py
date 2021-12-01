@@ -2,7 +2,7 @@
 #%%
 import base64
 import re
-brac
+braces = re.compile(r'(\[.*?\])(.*)')
 removeme = re.compile(r'<removeme>')
 # %%
 with open('input4onion.txt', 'r') as origin:
@@ -18,5 +18,9 @@ funcs = {
 #%%
 x = base64.b64decode(b).decode()
 # %%
-j = x
+j = braces.match(x)
+x = re.sub(j[0], '', x)
+
+if 'rm' in j[0]:
+    x = removeme.sub('', x)
 # %%
