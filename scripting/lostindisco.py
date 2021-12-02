@@ -15,11 +15,12 @@ def pull_imgs(url, tgt, i):
 
 def split_frames(img_ind):
     with Image.open(f'{URL_START}/img_{img_ind}.gif') as img:
-        makedirs(f'{URL_START}/{img_ind}.gif')
+        makedirs(f'{URL_START}/{img_ind}')
 
         for i in range(img.n_frames):
             img.seek(i)
-            img.save(f'{URL_START}/{img_ind}/{i:0>3}.gif')
+            blk = img.convert('1')
+            blk.save(f'{URL_START}/{img_ind}/{i:0>3}.gif')
 
 
 
@@ -32,15 +33,18 @@ if __name__ == '__main__':
     # for image in range(len(listdir('./disco'))):
     #     split_frames(image)
     
-    counts_w = 0
-    counts_b = 0    
+    # split_frames(f'{1}')
+
+    binary = []
     for frame in sorted(listdir(f'{URL_START}/{1}')):
         with Image.open(f'{URL_START}/{1}/{frame}') as img:
-            print(img.getcolors())
-            # if img.convert("L").getextrema() == (255, 255):
-            #     counts_w += 1
-            # else:
-            #     counts_b += 1
+            print(f'{frame=} => {img.getcolors()}')
+            if img.getcolors()[0] == (64, 255):
+                binary.append('0')
+            else:
+                binary.append('1')
 
-    print(counts_b, counts_w)
+    print(''.join(binary))
 
+    # with Image.open('./disco/1/001.gif') as img:
+    #     print(img.getcolors())
