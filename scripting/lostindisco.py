@@ -35,16 +35,14 @@ if __name__ == '__main__':
     
     # split_frames(f'{1}')
 
-    binary = []
-    for frame in sorted(listdir(f'{URL_START}/{1}')):
-        with Image.open(f'{URL_START}/{1}/{frame}') as img:
-            print(f'{frame=} => {img.getcolors()}')
-            if img.getcolors()[0] == (64, 255):
-                binary.append('0')
-            else:
-                binary.append('1')
-
-    print(''.join(binary))
-
-    # with Image.open('./disco/1/001.gif') as img:
-    #     print(img.getcolors())
+    frames = []
+    for i in range(56):
+        binary = []
+        for frame in sorted(listdir(f'{URL_START}/{i}')):
+            with Image.open(f'{URL_START}/{i}/{frame}') as img:
+                if img.getcolors()[0] == (64, 255):
+                    binary.append('0')
+                else:
+                    binary.append('1')
+        print(''.join(binary))
+    
